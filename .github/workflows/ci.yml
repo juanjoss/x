@@ -9,7 +9,7 @@ env:
   GO_VERSION: 1.19.x
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }} # <account>/<repo>
-  ENVIRONMENT_REPOSITORY: github.com/juanjoss/xconfig
+  ENVIRONMENT_REPOSITORY: juanjoss/xconfig
 
 jobs:
   test:
