@@ -9,7 +9,10 @@ func (s *server) index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
-	err := json.NewEncoder(w).Encode(map[string]string{"x": s.config.Hostname})
+	err := json.NewEncoder(w).Encode(map[string]string{
+		"app":  "x",
+		"host": s.config.Hostname,
+	})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
