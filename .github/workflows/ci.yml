@@ -76,9 +76,9 @@ jobs:
       - name: Update kubernetes manifests
         run: |
           cd ./kustomize
-          kustomize edit set image x-image:${{ github.repository }}:${{ github.sha }}
+          kustomize edit set image x-image=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          rm ../manifests/x.yaml
           kustomize build . > ../manifests/x.yaml
-          cat kustomization.yaml
           cd ..
       
       - name: Push changes
