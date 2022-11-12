@@ -70,7 +70,7 @@ jobs:
       - name: Scan Docker image
         uses: azure/container-scan@v0
         with:
-          image-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          image-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
       
       - name: Install cosign
         uses: sigstore/cosign-installer@f3c664df7af409cb4873aa5068053ba9d61a57b6 #v2.6.0
@@ -100,7 +100,7 @@ jobs:
       - name: Update kubernetes manifests
         run: |
           cd ./kustomize
-          kustomize edit set image x-image:${{ github.repository }}:${{ github.sha }}
+          kustomize edit set image x-image:${{ github.repository }}:${{ build.steps.meta.outputs.tags }}
           kustomize build . > ../manifests/x.yaml
           cat kustomization.yaml
           cd ..
@@ -111,5 +111,5 @@ jobs:
           git config user.email "action@github.com"
           git status
           git add .
-          git commit -m "Updating ${{ github.repository }} image tag to ${{ github.sha }}"
+          git commit -m "Updating ${{ github.repository }} image tag to ${{ build.steps.meta.outputs.tags }}"
           git push origin master
