@@ -111,5 +111,5 @@ jobs:
           git config user.email "action@github.com"
           git status
           git add .
-          git commit -m "Updating ${{ github.repository }} image tag to ${{ build.steps.meta.outputs.tags }}"
+          git commit -m "Updating ${{ github.repository }} image tag to ${{ meta.outputs.tags }}"
           git push origin master
