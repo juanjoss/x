@@ -72,11 +72,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          
-      - name: Scan Docker image
-        uses: azure/container-scan@v0
-        with:
-          image-name: ghcr.io/${{ steps.meta.outputs.tags }}
       
       - name: Install cosign
         uses: sigstore/cosign-installer@f3c664df7af409cb4873aa5068053ba9d61a57b6 #v2.6.0
