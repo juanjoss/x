@@ -22,7 +22,7 @@ jobs:
           go-version: ${{ env.GO_VERSION }}
       
       - name: Install dependencies
-        run: go get .
+        run: go mod tidy
         
       - name: Run tests
         run: |
@@ -70,7 +70,7 @@ jobs:
       - name: Scan Docker image
         uses: azure/container-scan@v0
         with:
-          image-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${GITHUB_SHA}
+          image-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
       
       - name: Install cosign
         uses: sigstore/cosign-installer@f3c664df7af409cb4873aa5068053ba9d61a57b6 #v2.6.0
@@ -100,7 +100,7 @@ jobs:
       - name: Update kubernetes manifests
         run: |
           cd ./kustomize
-          kustomize edit set image x-image:${{ github.repository }}:${GITHUB_SHA}
+          kustomize edit set image x-image:${{ github.repository }}:${{ github.sha }}
           kustomize build . > ../manifests/x.yaml
           cat kustomization.yaml
           cd ..
@@ -111,5 +111,5 @@ jobs:
           git config user.email "action@github.com"
           git status
           git add .
-          git commit -m "Updating ${{ github.repository }} image tag to ${GITHUB_SHA}"
+          git commit -m "Updating ${{ github.repository }} image tag to ${{ github.sha }}"
           git push origin master
