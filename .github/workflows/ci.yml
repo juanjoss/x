@@ -70,7 +70,7 @@ jobs:
       - name: Scan Docker image
         uses: azure/container-scan@v0
         with:
-          image-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
+          image-name: ${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
       
       - name: Install cosign
         uses: sigstore/cosign-installer@f3c664df7af409cb4873aa5068053ba9d61a57b6 #v2.6.0
