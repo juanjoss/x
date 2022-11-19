@@ -33,6 +33,7 @@ func NewServer(config *Config, logger *zap.Logger) *server {
 
 func (s *server) ListenAndServe() {
 	s.router.HandleFunc("/", s.index).Methods(http.MethodGet)
+	s.router.HandleFunc("/health", s.healthcheck).Methods(http.MethodGet)
 
 	srv := &http.Server{
 		Addr:         ":" + s.config.Port,
